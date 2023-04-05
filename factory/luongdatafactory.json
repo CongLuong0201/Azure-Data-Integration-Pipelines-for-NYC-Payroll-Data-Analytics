@@ -1,0 +1,9 @@
+{
+	"name": "luongdatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8c2aebdd-0030-49fb-bb66-dac55dd1e6cc",
+		"tenantId": "f01e930a-b52e-42b1-b70f-a8882b5d043b"
+	}
+}

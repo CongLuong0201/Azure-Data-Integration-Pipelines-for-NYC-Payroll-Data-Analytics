@@ -1,0 +1,56 @@
+{
+	"name": "dataflowloadAgencyMastertoSynapse",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AgencyMasterDelimitedText",
+						"type": "DatasetReference"
+					},
+					"name": "sourceAgencyMasterDelimitedText"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "NYC_Payroll_AGENCY_MD_AzureSynapseAnalyticsTable",
+						"type": "DatasetReference"
+					},
+					"name": "sinkNYCPayrollAGENCYMDAzureSynapseAnalyticsTable"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          AgencyID as string,",
+				"          AgencyName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceAgencyMasterDelimitedText",
+				"sourceAgencyMasterDelimitedText sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AgencyID as string,",
+				"          AgencyName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          AgencyID,",
+				"          AgencyName",
+				"     )) ~> sinkNYCPayrollAGENCYMDAzureSynapseAnalyticsTable"
+			]
+		}
+	}
+}
